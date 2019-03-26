@@ -1,0 +1,34 @@
+﻿@model GuestResponse
+@{
+    ViewData["Title"] = "RSVP Now";
+}
+
+<div class="row">
+    <div class="col-12 col-lg-6 offset-lg-3">
+        <h2 class="display-6">This is the RsvpForm.cshtml</h2>
+        <form asp-action="RsvpForm" method="post">
+            <div asp-validation-summary="All"></div>
+            <div class="form-group">
+                <label asp-for="Name">Your name:</label>
+                <input asp-for="Name" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Email">Your email:</label>
+                <input asp-for="Email" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone">Your phone:</label>
+                <input asp-for="Phone" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="WillAttend">Will you attend?</label>
+                <select asp-for="WillAttend" class="form-control">
+                    <option value="">Choose an option</option>
+                    <option value="true">Yes, I'll be there</option>
+                    <option value="false">No, I can't come</option>
+                </select>
+            </div>
+            <button class="btn btn-primary" type="submit">Submit RSVP</button>
+        </form>
+    </div>
+</div>
