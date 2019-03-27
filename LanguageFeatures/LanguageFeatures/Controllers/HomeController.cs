@@ -80,5 +80,128 @@ namespace LanguageFeatures.Controllers
 
             return View("Index", results);
         }
+
+        public ViewResult ShoppingCart()
+        {
+            ShoppingCart cart = new ShoppingCart
+            {
+                Products = Product.GetProducts()
+            };
+            decimal cartTotal = cart.TotalPrices();
+            return View("Index", new string[] { $"Total: {cartTotal:C2}" });
+        }
+
+        public ViewResult ShoppingCartIEnumerable()
+        {
+            ShoppingCart cart = new ShoppingCart { Products = Product.GetProducts() };
+
+            Product[] productArray =
+            {
+                new Product {Name = "Kayak", Price = 275M},
+                new Product {Name = "Lifejacket", Price = 48.95M}
+            };
+
+            decimal cartTotal = cart.TotalPrices();
+            decimal arrayTotal = productArray.TotalPrices();
+
+            return View("Index", new string[]
+            {
+                $"Cart Total: {cartTotal:C2}",
+                $"Array Total: {arrayTotal:C2}"
+            });
+        }
+
+        public ViewResult FilterResults()
+        {
+            Product[] productArray =
+            {
+                new Product {Name = "Kayak", Price = 275M},
+                new Product {Name = "Lifejacket", Price = 48.95M},
+                new Product {Name = "Soccer ball", Price = 19.50M},
+                new Product {Name = "Corner flag", Price = 34.95M}
+            };
+
+            decimal arrayTotal = productArray.FilterByPrice(20).TotalPrices();
+
+            return View("Index", new string[] { $"Array Total: {arrayTotal:C2}" });
+        }
+
+        public ViewResult LambdaExpression()
+        {
+            Product[] productArray = {
+                new Product {Name = "Kayak", Price = 275M},
+                new Product {Name = "Lifejacket", Price = 48.95M},
+                new Product {Name = "Soccer ball", Price = 19.50M},
+                new Product {Name = "Corner flag", Price = 34.95M}
+            };
+
+            Func<Product, bool> nameFilter = delegate (Product prod)
+            {
+                return prod?.Name?[0] == 'S';
+            };
+
+            //decimal priceFilterTotal = productArray.FilterByPrice(20).TotalPrices();
+            //decimal nameFilterTotal = productArray.FilterByName('S').TotalPrices();
+
+            //decimal priceFilterTotal = productArray.Filter(FilterByPrice).TotalPrices();
+            //decimal nameFilterTotal = productArray.Filter(nameFilter).TotalPrices();
+
+            decimal priceFilterTotal = productArray.Filter(p => (p?.Price ?? 0) >= 20).TotalPrices();
+            decimal nameFilterTotal = productArray.Filter(p => p?.Name?[0] == 'S').TotalPrices();
+
+            return View("Index", new string[]
+            {
+                $"Price Total: {priceFilterTotal:C2}",
+                $"Name Total: {nameFilterTotal:C2}"
+            });
+        }
+
+        bool FilterByPrice(Product p)
+        {
+            return (p?.Price ?? 0) >= 20;
+        }
+
+        //public ViewResult Linq()
+        //{
+        //    return View("Index", Product.GetProducts().Select(p => p?.Name));
+        //}
+        public ViewResult Linq() => View("Index", Product.GetProducts().Select(p => p?.Name));
+
+        public ViewResult TypeInference() {
+            var names = new[] { "Kayak", "Lifejacket", "Soccer ball" };
+            return View("Index", names);
+        }
+
+        public ViewResult AnonymousType()
+        {
+            var products = new[]
+            {
+                new { Name = "Kayak", Price = 275M },
+                new { Name = "Lifejacket", Price = 48.95M },
+                new { Name = "Soccer ball", Price = 19.50M },
+                new { Name = "Corner flag", Price = 34.95M }
+            };
+
+            return View("Index", products.Select(p => p.Name));
+            //return View("Index", products.Select(p => p.GetType().Name));
+        }
+
+        public async Task<ViewResult> AsyncAwait()
+        {
+            long? length = await MyAsyncMethods.GetPageLength();
+            return View("Index", new string[] { $"Length: {length}" });
+        }
+
+        public ViewResult HardCoding()
+        {
+            var products = new[] {
+                new { Name = "Kayak", Price = 275M },
+                new { Name = "Lifejacket", Price = 48.95M },
+                new { Name = "Soccer ball", Price = 19.50M },
+                new { Name = "Corner flag", Price = 34.95M }
+            };
+
+            return View("Index", products.Select(p => $"{nameof(p.Name)}: {p.Name}, {nameof(p.Price)}: {p.Price}"));
+        }
     }
 }
