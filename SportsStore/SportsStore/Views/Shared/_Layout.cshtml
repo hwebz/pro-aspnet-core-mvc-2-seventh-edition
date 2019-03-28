@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>SportsStore</title>
+    @*<link href="~/vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />*@
+    <link asp-href-include="~/lib/bootstrap/**/*.min.css" asp-href-exclude="**/*-reboot*,**/*-grid*" rel="stylesheet" />
+</head>
+<body>
+    <div class="navbar navbar-inverse bg-inverse" role="navigation">
+        <a class="navbar-brand" href="#">SPORTS STORE</a>
+    </div>
+    <div class="row m-1 p-1">
+        <div id="categories" class="col-3">
+            Put something useful here later
+        </div>
+        <div class="col-9">
+            @RenderBody()
+        </div>
+    </div>
+    @*<script src="~/vendor/jquery/dist/jquery.min.js"></script>
+        <script src="~/vendor/bootstrap/dist/js/bootstrap.min.js"></script>*@
+    <script asp-src-include="~/lib/jquery/*.min.js" asp-src-exclude="**/*slim*"></script>
+    <script asp-src-include="~/lib/bootstrap/*.min.js" asp-src-exclude="**/*bundle*"></script>
+</body>
+</html>
