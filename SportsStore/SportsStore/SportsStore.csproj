@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\lib\NewFolder\**" />
+    <Content Remove="wwwroot\lib\NewFolder\**" />
+    <EmbeddedResource Remove="wwwroot\lib\NewFolder\**" />
+    <None Remove="wwwroot\lib\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" />
@@ -13,7 +20,13 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\lib\bootstrap\" />
+    <Folder Include="wwwroot\lib\font-awesome\css\" />
     <Folder Include="wwwroot\lib\jquery\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\lib\font-awesome\fonts\fontawesome-webfont.svg" />
+    <None Include="wwwroot\lib\font-awesome\fonts\fontawesome-webfont.woff2" />
   </ItemGroup>
 
 </Project>

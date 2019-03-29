@@ -30,7 +30,19 @@ namespace SportsStore
             // dotnet ef migrations add Initial => to add migration to database using entity framework
             services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(Configuration["Data:SportsStoreProducts:ConnectionString"]));
             services.AddTransient<IProductRepository, EFProductRepository>();
+
+            // session storage service
+            services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            // Order service
+            services.AddTransient<IOrderRepository, EFOrderRepository>();
+
             services.AddMvc();
+            // enable in-memory data store
+            services.AddMemoryCache();
+            // enabling sessions
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,6 +61,7 @@ namespace SportsStore
                 app.UseStatusCodePages(); // add a simple method to HTTP responses such as 404 - Not Found
             }
 
+            app.UseSession();
             app.UseStaticFiles(); // enable support for serving static content from wwwroot folder
             app.UseMvc(routes => // enable ASP.NET Core MVC
             {
@@ -64,16 +77,16 @@ namespace SportsStore
                     defaults: new { controller = "Product", action = "List", productPage = 1 }
                 );
 
-                routes.MapRoute(
-                    name: null,
-                    template: "{category}",
-                    defaults: new {controller = "Product", action = "List", productPage = 1}
-                );
+                //routes.MapRoute(
+                //    name: null,
+                //    template: "Category/{category}",
+                //    defaults: new {controller = "Product", action = "List", productPage = 1}
+                //);
 
                 routes.MapRoute(
                     name: null,
                     template: "",
-                    defaults: new {controller = "Product", action = "List", productPage = 1}
+                    defaults: new { controller = "Product", action = "List", productPage = 1 }
                 );
 
                 routes.MapRoute(
