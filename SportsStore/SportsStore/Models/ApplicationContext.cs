@@ -9,7 +9,7 @@ namespace SportsStore.Models
 {
     public class ApplicationContext : DbContext
     {
-        public ApplicationContext(DbContextOptions options) : base(options) { }
+        public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options) { }
 
         // dotnet ef migrations add Initial --project SportsStore // Create Initial migration for Products
         public DbSet<Product> Products { get; set; }

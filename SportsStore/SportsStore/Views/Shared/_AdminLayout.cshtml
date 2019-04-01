@@ -5,6 +5,12 @@
     @*<link href="~/vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />*@
     <link asp-href-include="~/lib/bootstrap/**/*.min.css" asp-href-exclude="**/*-reboot*,**/*-grid*" rel="stylesheet" />
     <link asp-href-include="~/lib/font-awesome/**/*.min.css" rel="stylesheet" />
+    <style>
+        .input-validation-error {
+            border-color: red;
+            background-color: #fee;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -26,13 +32,13 @@
                 </li>
             </ul>
             <div class="form-inline my-2 my-lg-0">
-                
+                <a asp-action="Logout" asp-controller="Account" class="btn btn-sm btn-primary">Log Out</a>
             </div>
         </div>
     </nav>
     <div class="row m-1 p-1">
         <div class="col-12">
-            @if(TempData["message"] != null)
+            @if (TempData["message"] != null)
             {
                 <div class="alert alert-success">@TempData["message"]</div>
             }
@@ -43,5 +49,7 @@
         <script src="~/vendor/bootstrap/dist/js/bootstrap.min.js"></script>*@
     <script asp-src-include="~/lib/jquery/*.min.js" asp-src-exclude="**/*slim*"></script>
     <script asp-src-include="~/lib/bootstrap/*.min.js" asp-src-exclude="**/*bundle*"></script>
+    <script asp-src-include="~/lib/jquery-validation/*.validate.min.js"></script>
+    <script asp-src-include="~/lib/jquery-validation-unobtrusive/*.validate.*.min.js"></script>
 </body>
 </html>

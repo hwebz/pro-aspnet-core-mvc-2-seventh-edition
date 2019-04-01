@@ -13,6 +13,17 @@ namespace SportsStore.Models
             new Product { Name = "Running shoes", Price = 95 }
         }.AsQueryable<Product>();
 
+        public Product DeleteProduct(int productID)
+        {
+            Product removedProduct = Products.FirstOrDefault(p => p.ProductID == productID);
+            if (removedProduct != null)
+            {
+                // remove product
+                //Products = Products.Select(p => p.ProductID != productID);
+            }
+            return removedProduct;
+        }
+
         public void SaveProduct(Product product)
         {
             if (product.ProductID == 0)

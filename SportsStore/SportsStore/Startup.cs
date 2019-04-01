@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,6 +31,10 @@ namespace SportsStore
             // dotnet ef migrations add Initial => to add migration to database using entity framework
             services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(Configuration["Data:SportsStoreProducts:ConnectionString"]));
             services.AddTransient<IProductRepository, EFProductRepository>();
+
+            // Using app identity
+            services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(Configuration["Data:SportsStoreIdentity:ConnectionString"]));
+            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppIdentityDbContext>().AddDefaultTokenProviders();
 
             // session storage service
             services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
@@ -59,9 +64,13 @@ namespace SportsStore
                 });
                 app.UseDeveloperExceptionPage(); // display details of exceptions that occur
                 app.UseStatusCodePages(); // add a simple method to HTTP responses such as 404 - Not Found
+            } else
+            {
+                app.UseExceptionHandler("/Error");
             }
 
             app.UseSession();
+            app.UseAuthentication();
             app.UseStaticFiles(); // enable support for serving static content from wwwroot folder
             app.UseMvc(routes => // enable ASP.NET Core MVC
             {
@@ -94,7 +103,11 @@ namespace SportsStore
                     template: "{controller=Product}/{action=List}/{id?}"
                 );
             });
-            SeedData.EnsurePopulated(app);
+
+            // using seed features in AdminController when user hit Seed Database instead of auto-seed at the first time app running
+            // and indentity as well when user navigate to Account/Login route, Identity Seed will be seeded
+            //SeedData.EnsurePopulated(app);
+            //IdentitySeedData.EnsurePopulated(app);
         }
     }
 }
