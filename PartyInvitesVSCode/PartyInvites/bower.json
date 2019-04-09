@@ -1,0 +1,7 @@
+{
+    "name": "PartyInvitesVSCode",
+    "private": true,
+    "dependencies": {
+        "bootstrap": "latest"
+    }
+}
