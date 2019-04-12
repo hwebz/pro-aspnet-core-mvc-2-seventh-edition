@@ -1,0 +1,17 @@
+﻿@model DateTime
+@{ Layout = null; }
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Controllers and Actions</title>
+    <link rel="stylesheet" href="@Url.Action("VirtualFileResponse", "Example")" />
+</head>
+<body class="m-1 p-1">
+    @*Model: @(((DateTime)Model).DayOfWeek)*@
+    Model: @Model.DayOfWeek <br />
+    ViewBag Date: @ViewBag.Date <br />
+    ViewBag Message: @ViewBag.Message
+</body>
+</html>

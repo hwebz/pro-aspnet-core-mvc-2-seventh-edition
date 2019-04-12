@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+@section Header {
+    <div class="bg-success">
+        @foreach (string str in new[] { "Home", "List", "Edit" })
+        {
+            <a class="btn btn-sm btn-primary" asp-action="@str">@str</a>
+
+        }
+    </div>
+}
+
+@Html.Partial("MyStronglyTypedPartial",
+        new string[] { "Apple", "Orange", "Pear" })
+
+    <ul id="list"></ul>
+
+@section Footer {
+    <div class="bg-success">
+        This is the footer
+    </div>
+}
+
+@section scripts {
+    <script id="jsonData" type="application/json">
+        @Json.Serialize(new string[] { "Apple", "Orange", "Pear" })
+    </script>
+    <script asp-src-include="lib/jquery/dist/*.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var list = $("#list");
+            JSON.parse($("#jsonData").text()).forEach(function (val) {
+                console.log("Val: " + val);
+                list.append($("<li>").text(val));
+            });
+        });
+    </script>
+}

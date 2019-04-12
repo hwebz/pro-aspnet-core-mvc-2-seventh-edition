@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Cities</title>
+    <environment names="development">
+        <link href="https://ajax.aspnetcdn.com/ajax/bootstrap/4.3.1/css/bootstrap.css"
+              asp-fallback-href-include="/lib/bootstrap/dist/**/*.css"
+              asp-fallback-href-exclude="**/*-reboot*,**/*-grid*"
+              asp-fallback-test-class="btn"
+              asp-fallback-test-property="display"
+              asp-fallback-test-value="inline-block"
+              asp-append-version="true"
+              rel="stylesheet" />
+    </environment>
+    <environment names="production">
+        <link href="https://ajax.aspnetcdn.com/ajax/bootstrap/4.3.1/css/bootstrap.min.css"
+              asp-fallback-href-include="/lib/bootstrap/dist/**/*.min.css"
+              asp-fallback-href-exclude="**/*-reboot*,**/*-grid*"
+              asp-fallback-test-class="btn"
+              asp-fallback-test-property="display"
+              asp-fallback-test-value="inline-block"
+              rel="stylesheet" />
+    </environment>
+</head>
+<body class="m-1 p-1">
+    <environment names="development">
+        <div class="m-1 p-1 bg-info">
+            <h2>This is Development</h2>
+        </div>
+    </environment>
+    <environment names="production">
+        <div class="m-1 p-1 bg-danger">
+            <h2>This is Production</h2>
+        </div>
+    </environment>
+
+    @*<cache expires-after="@TimeSpan.FromSeconds(15)">*@
+    <!-- expires-sliding enable cached content will be used within 10s, wait for longer than 10s, cached content will be discarded, generate new content -->
+    @* vary-by-route will cache separately for each action *@
+    <cache expires-on="@DateTime.Parse("2100-01-01")" expires-sliding="@TimeSpan.FromSeconds(10)" vary-by-route="action" vary-by="@ViewContext.RouteData.Values["action"]">
+        @await Component.InvokeAsync("Time")
+    </cache>
+
+    <div class="m-1 p-1">
+        <img src="~/images/city.jpg" asp-append-version="true" />
+    </div>
+    <div>@RenderBody()</div>
+
+    <environment names="production">
+        @*<script asp-src-include="/lib/jquery/dist/**/*.min.js" asp-src-exclude="**.slim.**"></script>*@
+        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.0.min.js"
+                asp-fallback-src-include="lib/jquery/dist/**/*.min.js"
+                asp-fallback-src-exclude="**.slim**"
+                asp-fallback-test="window.jQuery"></script>
+    </environment>
+    <environment names="development">
+        @*<script asp-src-include="/lib/jquery/dist/**/j*.js" asp-src-exclude="**.slim.**,**.min.**" asp-append-version="true"></script> <!-- cache busting with asp-append-version -->*@
+        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.0.js"
+                asp-fallback-src-include="/lib/jquery/dist/**/j*.js"
+                asp-fallback-src-exclude="**.slim**,**.min.**"
+                asp-fallback-test="window.jQuery"
+                asp-append-version="true"></script>
+    </environment>
+</body>
+</html>

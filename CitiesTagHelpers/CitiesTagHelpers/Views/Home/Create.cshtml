@@ -1,0 +1,29 @@
+﻿@model City
+
+<form method="post">
+    <div class="form-group">
+        <label helper-for="Name"></label>
+        <input helper-for="Name" />
+    </div>
+    <div class="form-group">
+        <label helper-for="Country"></label>
+        <input helper-for="Country" />
+    </div>
+    <div class="form-group">
+        <label helper-for="Population"></label>
+        <input helper-for="Population" />
+    </div>
+
+    @*<button type="submit" bs-button-color="danger">Add</button>
+    <button type="reset" class="btn btn-primary">Reset</button>*@
+    @*<a class="btn btn-primary" href="/Home/Index">Cancel</a>*@
+    @*<a bs-button-color="primary" href="/Home/Index">Cancel</a>
+    <formbutton type="submit" bg-color="danger" />
+    <formbutton type="reset" />*@
+
+    <div theme="primary">
+        <button type="submit">Add</button>
+        <button type="reset">Reset</button>
+        <a href="/Home/Index">Cancel</a>
+    </div>
+</form>

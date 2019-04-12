@@ -1,0 +1,40 @@
+﻿@model City
+
+<form method="post" asp-controller="Home" asp-action="Create" asp-antiforgery="true">
+    <div asp-validation-summary="All"></div>
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input class="form-control" asp-for="Name" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Country"></label>
+        @*<input class="form-control" asp-for="Country" />*@
+        @*<select class="form-control" asp-for="Country">
+                <option disabled selected value="">Select a Country</option>
+                <option>UK</option>
+                <option>USA</option>
+                <option>France</option>
+                <option>China</option>
+            </select>*@
+        @*<select class="form-control" asp-for="Country" asp-items="@new SelectList(Enum.GetNames(typeof(CountryNames)))">
+                <option disabled selected value="">Select a Country</option>
+            </select>*@
+        @*<select class="form-control" asp-for="Country" asp-items="@ViewBag.Countries">
+                <option disabled selected value="">Select a Country</option>
+            </select>*@
+        <select class="form-control" model-for="Country">
+            <option selected disabled value="">Select a Country</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="Population"></label>
+        <input class="form-control" asp-for="Population" />
+        @*<input class="form-control" asp-for="Population" asp-format="{0:#,###}" />*@
+    </div>
+    <div class="form-group">
+        <label asp-for="Notes"></label>
+        <textarea class="form-control" asp-for="Notes"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Add</button>
+    <a class="btn btn-primary" href="/Home/Index">Cancel</a>
+</form>
