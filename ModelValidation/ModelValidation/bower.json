@@ -1,0 +1,9 @@
+{
+  "name": "model-validation",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "4.0.0-alpha.6",
+    "jquery-validation": "1.19.0",
+    "jquery-validation-unobtrusive": "3.2.11"
+  }
+}

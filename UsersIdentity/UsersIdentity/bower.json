@@ -1,0 +1,7 @@
+{
+  "name": "users-identity",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "4.3.1"
+  }
+}
