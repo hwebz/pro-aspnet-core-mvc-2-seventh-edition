@@ -59,8 +59,8 @@ namespace UsersIdentity
             // Third-Party Authentication
             services.AddAuthentication().AddGoogle(options =>
             {
-                options.ClientId = "984706706429-c9kme4mbca3em1aean3b1voteurkaai0.apps.googleusercontent.com";
-                options.ClientSecret = "poR8MvUTqbXi7kp9atmrjTf8";
+                options.ClientId = "<Google Client ID>";
+                options.ClientSecret = "<Google Client Secret>";
             });
 
             // dotnet ef migrations add Initial --project UsersIdentity
